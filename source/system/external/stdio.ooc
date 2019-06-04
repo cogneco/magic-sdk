@@ -144,6 +144,12 @@ println: func ~withCStr (str: Char*) {
 	println()
 }
 
+print: func ~withCstr (str: Char*) {
+	fputs(str, stdout)
+}
+
 println: func ~withStr (str: String) { println(str toCString()) }
+
+print: func ~withStr (str: String) { print(str toCString()) }
 
 println: func { fputc('\n', stdout) }
