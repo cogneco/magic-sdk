@@ -185,4 +185,19 @@ RasterRgb: class extends RasterPacked {
 		}
 		result
 	}
+	getCrop: func (region: IntBox2D) -> This {
+		result := This new(region size)
+		destination := result buffer pointer
+		source := this buffer pointer + region top * this stride * this bytesPerPixel + region left * this bytesPerPixel
+		for (y in 0 .. region height) {
+			for (x in 0 .. region width * this bytesPerPixel) {
+				destination@ = source@
+				destination += 1
+				source += 1
+			}
+			destination += result stride - result width * this bytesPerPixel
+			source += this stride - region width * this bytesPerPixel
+		}
+		result
+	}
 }
